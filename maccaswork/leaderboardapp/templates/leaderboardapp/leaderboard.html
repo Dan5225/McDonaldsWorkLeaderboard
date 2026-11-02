@@ -1,0 +1,294 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="refresh" content="5">
+
+    <title>TEHS Leaderboard</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            padding: 40px 20px;
+            font-family: Arial, sans-serif;
+            background: #f4f7ff;
+            color: #26324b;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: auto;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 45px;
+        }
+
+        .header h1 {
+            font-size: 42px;
+            margin-bottom: 8px;
+            color: #253b80;
+        }
+
+        .header p {
+            color: #77829b;
+            font-size: 16px;
+        }
+
+        .podium {
+            display: flex;
+            align-items: flex-end;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 50px;
+        }
+
+        .podium-card {
+            flex: 1;
+            max-width: 240px;
+            text-align: center;
+            padding: 25px 12px;
+            border-radius: 18px 18px 0 0;
+        }
+
+        .first {
+            background: #ffe69a;
+            min-height: 230px;
+            order: 2;
+        }
+
+        .second {
+            background: #dce4f1;
+            min-height: 185px;
+            order: 1;
+        }
+
+        .third {
+            background: #f5c9a9;
+            min-height: 155px;
+            order: 3;
+        }
+
+        .medal {
+            font-size: 42px;
+            margin-bottom: 12px;
+        }
+
+        .podium-card h2 {
+            font-size: 20px;
+            margin: 8px 0;
+            overflow-wrap: anywhere;
+        }
+
+        .score {
+            font-size: 28px;
+            font-weight: bold;
+        }
+
+        .rankings {
+            background: white;
+            padding: 25px;
+            border-radius: 18px;
+            box-shadow: 0 5px 20px rgba(30, 50, 100, 0.07);
+        }
+
+        .rankings h2 {
+            margin-top: 0;
+            color: #253b80;
+        }
+
+        .ranking-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 17px 12px;
+            border-bottom: 1px solid #edf0f7;
+            gap: 12px;
+            transition: background 0.2s ease, transform 0.2s ease;
+            border-radius: 10px;
+        }
+
+        .ranking-row:hover {
+            background: #f4f7ff;
+            transform: translateX(4px);
+        }
+
+        .ranking-row:last-child {
+            border-bottom: none;
+        }
+
+        .rank {
+            font-weight: bold;
+            width: 38px;
+            height: 38px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 10px;
+            background: #edf0f7;
+            color: #71809e;
+        }
+
+        .rank-gold {
+            background: #ffe69a;
+            color: #956500;
+        }
+
+        .rank-silver {
+            background: #dce4f1;
+            color: #52617b;
+        }
+
+        .rank-bronze {
+            background: #f5c9a9;
+            color: #92512c;
+        }
+
+        .participant {
+            flex: 1;
+            font-weight: 600;
+        }
+
+        .points {
+            font-weight: 800;
+            color: #536be5;
+            font-size: 20px;
+            white-space: nowrap;
+        }
+
+        @media (max-width: 600px) {
+            body {
+                padding: 20px 10px;
+            }
+
+            .header h1 {
+                font-size: 30px;
+            }
+
+            .podium {
+                gap: 6px;
+            }
+
+            .podium-card {
+                padding: 20px 5px;
+            }
+
+            .podium-card h2 {
+                font-size: 14px;
+            }
+
+            .score {
+                font-size: 21px;
+            }
+
+            .medal {
+                font-size: 32px;
+            }
+
+            .rankings {
+                padding: 15px;
+            }
+        }
+
+        .last-updated {
+            margin-top: 15px;
+            font-size: 14px !important;
+            color: #77829b;
+            background: #ffffff;
+            display: inline-block;
+            padding: 9px 16px;
+            border-radius: 20px;
+            box-shadow: 0 3px 10px rgba(30, 50, 100, 0.06);
+        }
+        
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+
+<div class="header">
+    <h1>🏆 TEHS LEADERBOARD</h1>
+    <p>Competition Rankings</p>
+
+    {% if last_updated %}
+        <p class="last-updated">
+            🕒 Last score update:
+            {{ last_updated|date:"d M Y, g:i A" }}
+        </p>
+    {% else %}
+        <p class="last-updated">No scores have been updated yet.</p>
+    {% endif %}
+</div>
+
+    {% if participants|length >= 3 %}
+
+    <div class="podium">
+
+        <div class="podium-card second">
+            <div class="medal">🥈</div>
+            <h2>{{ participants.1.participant }}</h2>
+            <div class="score">{{ participants.1.tehs }}</div>
+            <p>2ND PLACE</p>
+        </div>
+
+        <div class="podium-card first">
+            <div class="medal">🥇</div>
+            <h2>{{ participants.0.participant }}</h2>
+            <div class="score">{{ participants.0.tehs }}</div>
+            <p>1ST PLACE</p>
+        </div>
+
+        <div class="podium-card third">
+            <div class="medal">🥉</div>
+            <h2>{{ participants.2.participant }}</h2>
+            <div class="score">{{ participants.2.tehs }}</div>
+            <p>3RD PLACE</p>
+        </div>
+
+    </div>
+
+    {% endif %}
+
+    <div class="rankings">
+
+        <h2>📊 Full Rankings</h2>
+
+        {% for person in participants %}
+
+        <div class="ranking-row">
+
+<div class="rank {% if forloop.counter == 1 %}rank-gold{% elif forloop.counter == 2 %}rank-silver{% elif forloop.counter == 3 %}rank-bronze{% endif %}">
+    #{{ forloop.counter }}
+</div>
+
+            <div class="participant">
+                {{ person.participant }}
+            </div>
+
+            <div class="points">
+                {{ person.tehs }} TEHS
+            </div>
+
+        </div>
+
+        {% empty %}
+
+        <p>No participants yet!</p>
+
+        {% endfor %}
+
+    </div>
+
+</div>
+
+</body>
+</html>
