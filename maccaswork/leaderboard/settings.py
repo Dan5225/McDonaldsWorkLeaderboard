@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-xyoxlv+jtu8joz_&igdqye)k8)a*57kkqum!t(q!!#7uca^q6@
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["mcdonaldsworkleaderboard-production.up.railway.app"]
 
 
 # Application definition
