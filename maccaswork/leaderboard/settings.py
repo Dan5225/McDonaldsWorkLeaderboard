@@ -82,7 +82,7 @@ if os.getenv("DJANGO_ENV") == "production":
     DATABASE = {
         "default": {
             "ENGINE": "django.db.backends.mysql",
-            "NAME": os.environ["MYSQL_DATABASE"],
+            "NAME": os.environ["MYSQLDATABASE"],
             "USER": os.environ["MYSQLUSER"],
             "PASSWORD": os.environ["MYSQLPASSWORD"],
             "HOST":os.environ["MYSQLHOST"],
