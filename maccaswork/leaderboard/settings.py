@@ -83,10 +83,10 @@ if os.getenv("DJANGO_ENV") == "production":
         "default": {
             "ENGINE": "django.db.backends.mysql",
             "NAME": os.environ["MYSQL_DATABASE"],
-            "USER": os.environ["MYSQL_USER"],
-            "PASSWORD": os.environ["MYSQL_PASSWORD"],
-            "HOST":os.environ["MYSQL_HOST"],
-            "PORT": os.getenv("MYSQL_PORT","3306"),
+            "USER": os.environ["MYSQLUSER"],
+            "PASSWORD": os.environ["MYSQLPASSWORD"],
+            "HOST":os.environ["MYSQLHOST"],
+            "PORT": os.getenv("MYSQLPORT","3306"),
             "OPTIONS":{"charset":"utf8mb4"},
         }
     }
