@@ -79,7 +79,7 @@ WSGI_APPLICATION = 'leaderboard.wsgi.application'
 
 # get environment variables
 if os.getenv("DJANGO_ENV") == "production":
-    DATABASE = {
+    DATABASES = {
         "default": {
             "ENGINE": "django.db.backends.mysql",
             "NAME": os.environ["MYSQLDATABASE"],
