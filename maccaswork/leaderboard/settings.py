@@ -145,3 +145,8 @@ MAILERS = {
         'BACKEND': 'django.core.mail.backends.console.EmailBackend',
     },
 }
+
+CSRF_TRUSTED_ORIGINS = [
+    "https://mcdonaldsworkleaderboard-production.up.railway.app",
+    SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
+]
