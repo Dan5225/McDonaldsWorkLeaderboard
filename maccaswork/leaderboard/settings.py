@@ -9,23 +9,27 @@ https://docs.djangoproject.com/en/6.1/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/6.1/ref/settings/
 """
-
+import os
 from pathlib import Path
+from dotenv import load_dotenv
+
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
+load_dotenv(BASE_DIR / ".env")
 
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/6.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-xyoxlv+jtu8joz_&igdqye)k8)a*57kkqum!t(q!!#7uca^q6@'
+SECRET_KEY = os.getenv("SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = os.getenv("DEBUG", False)
 
-ALLOWED_HOSTS = ["mcdonaldsworkleaderboard-production.up.railway.app"]
+ALLOWED_HOSTS = ["mcdonaldsworkleaderboard-production.up.railway.app",
+                 "127.0.0.1"]
 
 
 # Application definition
@@ -73,12 +77,27 @@ WSGI_APPLICATION = 'leaderboard.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/6.1/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+# get environment variables
+if os.getenv("DJANGO_ENV") == "production":
+    DATABASE = {
+        "default": {
+            "ENGINE": "django.db.backends.mysql",
+            "NAME": os.environ["MYSQL_DATABASE"],
+            "USER": os.environ["MYSQL_USER"],
+            "PASSWORD": os.environ["MYSQL_PASSWORD"],
+            "HOST":os.environ["MYSQL_HOST"],
+            "PORT": os.getenv("MYSQL_PORT","3306"),
+            "OPTIONS":{"charset":"utf8mb4"},
+        }
     }
-}
+
+else:
+    DATABASES = {  
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': BASE_DIR / 'db.sqlite3',
+        }
+    }
 
 
 # Password validation

@@ -24,3 +24,6 @@ env/
 # Operating system
 .DS_Store
 Thumbs.db
+
+# local environment variables (always git ignore)
+.env
